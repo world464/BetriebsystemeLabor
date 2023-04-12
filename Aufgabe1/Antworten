@@ -1,0 +1,26 @@
+Aufgabe 2a:
+Das Programm gibt 2 mal Hello! auf der Konsole aus.
+Modifiziert man nun das Programm steht nun 8 mal Hello!
+in der Konsole.
+Nach dem ersten Fork() Aufruf sind aus einem Prozess zwei
+Kindprozesse geworden, die jeweils den darunterliegenden
+Code ausführen. Beide Kindprozesse rufen nun fork() auf
+wodurch aus jedem Kindprozess 2 neue Kindprozesse entstanden
+sind. Dieser Vorgang wiederholt sich beim 3. fork() wieder
+sodass nach den 3 fork() 8 Kindprozesse entstanden sind
+welche jeweils die printf Methode aufrufen.
+
+Aufgabe 2b:
+1. Beim Forken wird die Pid zurückgegeben. Der Kind- und Elternprozess unter-
+scheidet sich in ihrer Pid. In den jeweiligen Prozessen kann man die Pid abfragen
+und je nachdem ob es sich um den Kind oder Elternprozess handelt unterschiedlichen
+Code ausführen. (Eltern > 0, Kind == 0)
+2. getpid() gibt die pid des Prozesses, der die Funktion aufgerufen hat
+   getppid() gibt die pid des Elternteils des Prozesses, der die Funktion aufruft
+   wait() wartet, bis das Kind fertig / gestorben ist (kind -> exit() )
+3. ein Pointer vom aktuellen Status wird übergeben. Es wird eine ganze Zahl
+zurückgegeben, die Auskunft über den Status des Kinds gibt.
+<-1 wait for child where pgid is equal to absolute value of pid
+ -1 --> wait for any child process
+ 0 --> wait for child where pgid is equal to pgid of process that called the method
+>0 --> wait for child where pid is equal to value of pid

@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-/*
-int main(int argc, char *argv[]) {
+
+int forkExample(int argc, char *argv[]) {
     // fork a process
     pid_t pid = fork();
     if (pid == 0) {
@@ -34,4 +34,4 @@ int main(int argc, char *argv[]) {
         exit(1);
 
     }
-}*/
+}

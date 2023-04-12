@@ -4,48 +4,53 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int ret(double pNumber){
-int number = pNumber;
-printf(" %d ", number);
-int zaehler = 1;
-
-// fork a process
-pid_t pid = fork();
-if (pid == 0) {
+int nChildProcess(double pNumber){
+    pid_t pid = fork();
+    for(int i = 0;i<pNumber;i++) {
+        if (pid == 0) {
 // child process
-pid = getpid();
-pid_t ppid = getppid();
-printf("This is child process (pid=%d) with parent %d.\n", pid, ppid);
+            pid = getpid();
+            pid_t ppid = getppid();
+            printf("This is child process (pid=%d) with parent %d.\n", pid, ppid);
+// child sleeps for 5 seconds
+            sleep(5);
+            exit(0);
+        } else if (pid > 0) {
+            pid = fork();
+            if (pid == 0) {
 
-if(number > 0) {
-ret(number - 1);
-}
-// child sleeps for 5 secods
-    sleep(5);
-exit(0);
-} else if (pid > 0) {
+// child process
+                pid = getpid();
+                pid_t ppid = getppid();
+                printf("This is child process (pid=%d) with parent %d.\n", pid, ppid);
+// child sleeps for 5 seconds
+                sleep(5);
+                exit(0);
+            } else if (pid > 0) {
 // parent process
-pid = getpid();
-printf("This is the parent process with process id %d.\n", pid);
+                pid = fork();
+                pid = getpid();
+                printf("This is the parent process with process id %d.\n", pid);
 // wait for child to finish
-pid = wait(NULL);
-if (pid == -1) {
-printf("Wait failed.\n");
-exit(1);
-}
-printf("Child %d finished.\n", pid);
-exit(0);
+                pid = wait(NULL);
+// parent process
 
-} else {
+                pid = getpid();
+                printf("This is the parent process with process id %d.\n", pid);
+// wait for child to finish
+                pid = wait(NULL);
+                if (pid == -1) {
+                    printf("Wait failed.\n");
+                    exit(1);
+                }
+                printf("Child %d finished.\n", pid);
+                exit(0);
 
-printf("Fork failed.\n");
-exit(1);
+            } else {
 
-}
-}
+                printf("Fork failed.\n");
+                exit(1);
 
-
-int main(int argc, char *argv[]) {
-    double zahl = atoi(argv[1]);//n childprocess;
-    ret(zahl);
-}
+            }
+        }
+}}
