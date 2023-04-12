@@ -7,7 +7,7 @@
 #include "Aufgabe1/forknr2c.c"
 
 int main() {
-    forkExample2(0,0);
+    forkExample2(0,0, 5);
 
    return 0;
 }

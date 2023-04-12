@@ -6,26 +6,24 @@
 
 //Nur manchmal in der richtigen Reinfolge
 
-int forkExample2(int argc, char *argv[]) {
+int forkExample2(int argc, char *argv[], int n) {
 
-    pid_t pid = 1;
-    for(int i = 1; 5> i; i++) {
+
+    for(int i = 1; n >= i; i++) {
+
         pid_t pid = fork();
-        if (pid == 0){
-            pid = getpid();
-            pid_t ppid = getppid();
+        if (pid == 0) {
             printf("This is child process %d\n", i);
             sleep(5);
             exit(0);
+
         }
-
-
     }
-    if (pid > 0) {
-        pid = wait(NULL);
-        printf("Parent process finished");
-        exit(0);
-    }
+
+    wait(NULL);
+    printf("Parent process finished");
+    exit(0);
+
 
 
 
