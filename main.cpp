@@ -7,7 +7,7 @@ int main() {
 
     //array1x1();
 
-    printString();
+    //printString();
 
     return 0;
 }
