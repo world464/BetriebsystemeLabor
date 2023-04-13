@@ -4,53 +4,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int nChildProcess(double pNumber){
-    pid_t pid = fork();
-    for(int i = 0;i<pNumber;i++) {
-        if (pid == 0) {
-// child process
-            pid = getpid();
-            pid_t ppid = getppid();
-            printf("This is child process (pid=%d) with parent %d.\n", pid, ppid);
-// child sleeps for 5 seconds
-            sleep(5);
-            exit(0);
-        } else if (pid > 0) {
-            pid = fork();
+int nChildProcess(int pNumber){
+        for(int i = 1; pNumber >= i; i++) {
+            pid_t pid = fork();
             if (pid == 0) {
-
-// child process
-                pid = getpid();
-                pid_t ppid = getppid();
-                printf("This is child process (pid=%d) with parent %d.\n", pid, ppid);
-// child sleeps for 5 seconds
+                printf("This is the child process %d\n", i);
                 sleep(5);
+                printf("End child process %d\n", i);
                 exit(0);
-            } else if (pid > 0) {
-// parent process
-                pid = fork();
-                pid = getpid();
-                printf("This is the parent process with process id %d.\n", pid);
-// wait for child to finish
-                pid = wait(NULL);
-// parent process
-
-                pid = getpid();
-                printf("This is the parent process with process id %d.\n", pid);
-// wait for child to finish
-                pid = wait(NULL);
-                if (pid == -1) {
-                    printf("Wait failed.\n");
-                    exit(1);
-                }
-                printf("Child %d finished.\n", pid);
-                exit(0);
-
-            } else {
-
-                printf("Fork failed.\n");
-                exit(1);
-
             }
+            sleep(1);
         }
-}}
+
+        for(int i = 1; pNumber >= i; i++){
+            wait(NULL);
+        }
+        printf("Parent process finished.\n");
+        exit(0);
+}
+/*
+int main(int argc, char *argv[]){
+    int number = atoi(argv[1]);
+    nChildProcess(number);
+}*/
