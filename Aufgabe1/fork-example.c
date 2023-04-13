@@ -7,20 +7,22 @@
 int forkExample(int argc, char *argv[]) {
     // fork a process
     pid_t pid = fork();
-    if (pid == 0) {
-// child process
+
+    if (pid == 0) {// child process
         pid = getpid();
         pid_t ppid = getppid();
         printf("This is child process (pid=%d) with parent %d.\n", pid, ppid);
 // child sleeps for 5 secods
         sleep(5);
         exit(0);
-    } else if (pid > 0) {
-// parent process
+
+    } else if (pid > 0) {// parent process
         pid = getpid();
         printf("This is the parent process with process id %d.\n", pid);
-// wait for child to finish
+
+        // wait for child to finish
         pid = wait(NULL);
+
         if (pid == -1) {
             printf("Wait failed.\n");
             exit(1);
@@ -29,9 +31,7 @@ int forkExample(int argc, char *argv[]) {
         exit(0);
 
     } else {
-
         printf("Fork failed.\n");
         exit(1);
-
     }
 }
