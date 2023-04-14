@@ -10,15 +10,11 @@ int nChildProcess(int pNumber){
             if (pid == 0) {
                 printf("This is the child process %d\n", i);
                 sleep(5);
-                printf("End child process %d\n", i);
                 exit(0);
             }
-            sleep(1);
         }
 
-        for(int i = 1; pNumber >= i; i++){
-            wait(NULL);
-        }
+        while(wait(NULL)>0);
         printf("Parent process finished.\n");
         exit(0);
 }

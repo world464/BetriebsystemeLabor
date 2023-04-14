@@ -3,11 +3,11 @@
 #include "Aufgabe0/nr4/printString.c"
 #include "Aufgabe1/simple-fork.c"
 #include "Aufgabe1/fork-example.c"
-
+#include "Aufgabe1/nChildprocess.c"
 #include "Aufgabe1/forknr2c.c"
 
 int main() {
-    forkExample2(0,0, 5);
+    nChildProcess(5);
 
    return 0;
 }
