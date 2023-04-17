@@ -24,3 +24,16 @@ zurückgegeben, die Auskunft über den Status des Kinds gibt.
  -1 --> wait for any child process
  0 --> wait for child where pgid is equal to pgid of process that called the method
 >0 --> wait for child where pid is equal to value of pid
+
+Aufgabe 4:
+
+Die sequentielle Version hat mit einem Prozess hat circa 57s gedauert (00:56:73)
+Die parallele Version hat mit 3 Prozessen (bei 3 Kernen) circa 28s gedauert (00:27:97)
+
+Damit ist die parallele Version mit 3 Kernen doppelt so schnell, was ungewöhlich ist, da wir eine
+Beschleunigung um circa den Faktor 3 erwartet haben.
+
+Bei unserem Programm waren alle Kerne gleich viel ausgelastet. Teilt man das Bild in Blöcke ein,
+können die Blöcke verschiedene Auslastungen verursachen, wodurch ein Kern vor den anderen fertig
+sein kann. Ist zum Beispiel ein Block einfarbig erleichtert dies die Berechnung enorm.
+Unser Programm verteilt die Bildzeilen gleichmäßig auf (modulo n).
