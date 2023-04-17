@@ -1,3 +1,4 @@
+/*
 //==============================================================================================
 // Originally written in 2016 by Peter Shirley <ptrshrl@gmail.com>
 //
@@ -159,8 +160,8 @@ int main() {
     //Parent finishes
 
 
-
-    /*funktioniert, aber ohne geteilten prozess
+    /*
+    funktioniert, aber ohne geteilten prozess
     int start =0;
     for (int j = image_height - 1; j >= 0; --j) {
         std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
@@ -168,7 +169,7 @@ int main() {
         start += image_width;
 
     }
-     */
+
 
     std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for(int i = 0 ; i<image_width*image_height; i++) {
@@ -177,3 +178,4 @@ int main() {
 
     std::cerr << "\nDone.\n";
 }
+    */
