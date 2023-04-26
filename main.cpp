@@ -7,10 +7,11 @@
 #include "Aufgabe1/forknr2c.c"
 #include "Aufgabe2/example/fileReader.c"
 
-int main() {
+/*int main() {
     //nChildProcess(3);
     //simpleFork(0,0);
     fileReader();
 
    return 0;
 }
+ */

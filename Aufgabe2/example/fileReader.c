@@ -6,7 +6,7 @@
 
 #define BMP_HEADER_SIZE 54
 
-int fileReader() {
+int main() {
 
     // Open the bitmap file
     int fd = open("example.bmp", O_RDWR);
