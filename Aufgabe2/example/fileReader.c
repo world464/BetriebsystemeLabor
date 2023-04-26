@@ -6,10 +6,10 @@
 
 #define BMP_HEADER_SIZE 54
 
-int fileReader() {
+int main() {
 
     // Open the bitmap file
-    int fd = open("example.bmp", O_RDWR);
+    int fd = open("/home/david/git-workspace/BetriebsystemeLabor/Aufgabe2/example/example.bmp", O_RDWR); //absolut path angeben
     if (fd < 0) {
         printf("Error: Failed to open file\n");
         exit(EXIT_FAILURE);
