@@ -1,0 +1,24 @@
+Aufgabe 1:
+
+a: Die Datei ist 00 00 01 78 in Hex groß, was 276 Bytes entspricht. Die Speicherung ist
+    Little-Endian.
+
+b:
+Header-Größe:  00-00-00-28
+Bildbreite in Pixel: 00-00-00-0A (signed)
+Bildhöhe: 00-00-00-0A (signed)
+Anzahl der Farbebenen : 00-01
+Bits pro Pixel: 00-18
+Kompressionsmethode: 00-00-00-00
+Bildgröße: 00-00-01-42
+Horizontale Auflösung:  00-00-1E-C2 (signed)
+Vertikale Auflösung: 00-00-1E-C2 (signed)
+Anzahl der Farben in der Palette: 00-00-00-00
+Anzahl der wichtigen Farben: 00-00-00-00
+
+c: C_1 ist ist ein quadratisches Bild (jeweils 00-0C)
+   C_2 ist ein quadratisches Bild (Breite 00-0C Höhe FF-FF-FF-F4)
+   FF-FF-FF-F4 entspricht der -(00-0C)
+
+d: In C_3 wird ein Bits pro Pixel sind von 18 auf 1 und die
+Bildgröße in Bytes beträgt 32 Bytes
