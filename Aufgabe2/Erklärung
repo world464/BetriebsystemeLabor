@@ -22,3 +22,14 @@ c: C_1 ist ist ein quadratisches Bild (jeweils 00-0C)
 
 d: In C_3 wird ein Bits pro Pixel sind von 18 auf 1 und die
 Bildgröße in Bytes beträgt 32 Bytes
+
+
+Aufgabe 2:
+
+a) Die Farbpixel werden mit 3 Bytes in Big-Endian dargestellt RGB. Die Intensivität variert zwischen 0 und 255 (00 bis FF).
+    Die Pixel werden Zeilenweise von unten nach oben abgespeichert.
+
+b) Da die Achse umgedreht ist durch - 0C stehen die schwarzen Pixel in C_1 oben und in C_2 unten.
+
+C) Der Offset ist um 8 Byte in der C_3 Datei größer als in C_2 und C_1.
+    In der C_3 Datei werden weniger Pixel als in den anderen beiden datei mit Farbwerten beschrieben.
