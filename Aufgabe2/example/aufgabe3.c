@@ -13,16 +13,13 @@
 int main(int argc,char* argv[]) {
 
     //Konsole einlesen
-   char* dateiName[sizeof (argv[1])];
-   *dateiName = argv[1];
-
-   int groesseDatei =  atoi(argv[2]);
-
-   printf("String %s \n", *dateiName);
-   printf("Zahl %d\n", groesseDatei);
+   char* fileName[sizeof (argv[1])];
+   *fileName = argv[1];
+   int sizeFile =  atoi(argv[2]);
+   char* filePath = realpath(*fileName, NULL);
 
     // Open the bitmap file
-    int fd = open("/home/david/git-workspace/BetriebsystemeLabor/Aufgabe2/example/example.bmp",  O_RDWR);
+    int fd = open(filePath,  O_RDWR);
     if (fd < 0) {
         printf("Error: Failed to open file\n");
         exit(EXIT_FAILURE);
@@ -43,6 +40,25 @@ int main(int argc,char* argv[]) {
         printf("Error: It's not a bitmap image\n");
         exit(EXIT_FAILURE);
     }
+
+    //Check the Bitmaps for Bit pro Pixle
+    if (bmp_header[28] != 24 || bmp_header[29] != 0){
+        printf("Error: It's not 24 bit pro Pixle\n");
+        exit(EXIT_FAILURE);
+    }
+
+    //Check the compression
+    if (bmp_header[30] != 24 || bmp_header[31] != 0 || bmp_header[32] != 24 || bmp_header[33] != 0){
+        printf("Error: It's not compress\n");
+        exit(EXIT_FAILURE);
+    }
+
+    //Check the color selection
+    if (bmp_header[46] != 24 || bmp_header[47] != 0 || bmp_header[48] != 24 || bmp_header[49] != 0){
+        printf("Error: The color \n");
+        exit(EXIT_FAILURE);
+    }
+
 
     // Get the image size, width, height and bit depth
     uint32_t image_size = *(uint32_t*) &bmp_header[2];
