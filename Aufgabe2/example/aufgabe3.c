@@ -10,10 +10,19 @@
 
 #define BMP_HEADER_SIZE 54
 
-int main() {
+int main(int argc,char* argv[]) {
+
+    //Konsole einlesen
+   char* dateiName[sizeof (argv[1])];
+   *dateiName = argv[1];
+
+   int groesseDatei =  atoi(argv[2]);
+
+   printf("String %s \n", *dateiName);
+   printf("Zahl %d\n", groesseDatei);
 
     // Open the bitmap file
-    int fd = open("/home/david/git-workspace/BetriebsystemeLabor/Aufgabe2/example/example.bmp", O_RDWR); //absolut path angeben
+    int fd = open("/home/david/git-workspace/BetriebsystemeLabor/Aufgabe2/example/example.bmp",  O_RDWR);
     if (fd < 0) {
         printf("Error: Failed to open file\n");
         exit(EXIT_FAILURE);
