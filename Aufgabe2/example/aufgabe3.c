@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include "MosaicGenerator.c"
 
 #define BMP_HEADER_SIZE 54
 
@@ -15,7 +16,7 @@ int main(int argc,char* argv[]) {
     //Konsole einlesen
    char* fileName[sizeof (argv[1])];
    *fileName = argv[1];
-   int sizeFile =  atoi(argv[2]);
+   int pkachel =  atoi(argv[2]);
    char* filePath = realpath(*fileName, NULL);
 
     // Open the bitmap file
@@ -48,13 +49,13 @@ int main(int argc,char* argv[]) {
     }
 
     //Check the compression
-    if (bmp_header[30] != 24 || bmp_header[31] != 0 || bmp_header[32] != 24 || bmp_header[33] != 0){
+    if (bmp_header[30] != 0 || bmp_header[31] != 0 || bmp_header[32] != 0 || bmp_header[33] != 0){
         printf("Error: It's not compress\n");
         exit(EXIT_FAILURE);
     }
 
     //Check the color selection
-    if (bmp_header[46] != 24 || bmp_header[47] != 0 || bmp_header[48] != 24 || bmp_header[49] != 0){
+    if (bmp_header[46] != 0 || bmp_header[47] != 0 || bmp_header[48] != 0 || bmp_header[49] != 0){
         printf("Error: The color \n");
         exit(EXIT_FAILURE);
     }
@@ -83,6 +84,33 @@ int main(int argc,char* argv[]) {
         printf("Error: Failed to read pixel data\n");
         exit(EXIT_FAILURE);
     }
+
+    // Reset the file pointer to the start of the pixel data
+    lseek(fd, BMP_HEADER_SIZE, SEEK_SET);
+
+    Image kleinesImage;
+    kleinesImage.height = height;
+    kleinesImage.width = width;
+    kleinesImage.pixel = pixel_data;
+    unsigned char* newPixels = generateMosaic(kleinesImage, pkachel);
+
+
+
+    // Overwrite the pixel data of the opened file
+    ssize_t bytes_written = write(fd, pixel_data, image_size - BMP_HEADER_SIZE);
+    if (bytes_written != image_size - BMP_HEADER_SIZE) {
+        printf("Error: Failed to write pixel data\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Close the bitmap file
+    close(fd);
+
+    // Free memory
+    free(pixel_data);
+
+    return 0;
+
 
 
 }

@@ -10,21 +10,21 @@ typedef struct {
 typedef struct {
     int width;
     int height;
-    char* pixel;
+    unsigned char* pixel;
 
 }Image;
 
 
-void generateMosaic(Image image, int tileSize) {
+unsigned char* generateMosaic(Image image, int tileSize) {
 
     int width = image.width;
     int height = image.height;
     int tileWidth = 0;
     int tileHeight = 0;
-    char pixelatedImage [height*width*3];
+    unsigned char pixelatedImage [height*width*3];
 
     pixel Image[height][width];
-    char counter = 0;
+    int counter = 0;
     for (int i = 0; i < height; i++){
         for (int j = 0; j < width; j++){
             Image[i][j].red = image.pixel[counter];
@@ -61,11 +61,12 @@ void generateMosaic(Image image, int tileSize) {
 
             for(int i = 0; i < tileHeight; i++) {
                 for (int j = 0; j < tileWidth; j++) {
-                    pixelatedImage[(y*3*width + i*width)+(x*3 + j*3)] = avgRed;
-                    pixelatedImage[(y*3*width + i*width)+(x*3 + j*3)+1] = avgGreen;
-                    pixelatedImage[(y*3*width + i*width)+(x*3 + j*3)+2] = avgBlue;
+                    pixelatedImage[(y*3*width + i*width)+(x*3 + j*3)] = (char)avgRed;
+                    pixelatedImage[(y*3*width + i*width)+(x*3 + j*3)+1] = (char)avgGreen;
+                    pixelatedImage[(y*3*width + i*width)+(x*3 + j*3)+2] = (char)avgBlue;
                 }
             }
         }
     }
+    return pixelatedImage;
 }
