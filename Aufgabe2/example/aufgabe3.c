@@ -11,16 +11,25 @@
 
 #define BMP_HEADER_SIZE 54
 
-int main(int argc,char* argv[]) {
+int gerneratePicture(char* argv[]) {
 
     //Konsole einlesen
-   char* fileName[sizeof (argv[1])];
-   *fileName = argv[1];
-   int pkachel =  atoi(argv[2]);
-   char* filePath = realpath(*fileName, NULL);
+    char fileName[1000];
+    int i1;
+    for(i1 = 0; i1 < *(argv[1]); i1++){//funktioniert nicht!!!
+        fileName[i1] = argv[1][i1];
+        printf("%c, %c\n", fileName[i1], argv[1][i1]);
+    }
+    fileName[i1] = '\0';
 
+    int pkachel =  atoi(argv[2]);
+//Der Pfad ist:          /home/user/Documents/BetriebsystemeLabor/Aufgabe2/example/example.bmp
+
+    //printf("%s \n %s", argv[1], argv[2]);
+    //printf("%s \t %s", fileName, argv[1]);
+    char* filePath = fileName;
     // Open the bitmap file
-    int fd = open(filePath,  O_RDWR);
+    int fd = open(argv[1],  O_RDWR);// argv[1] geht
     if (fd < 0) {
         printf("Error: Failed to open file\n");
         exit(EXIT_FAILURE);

@@ -11,12 +11,11 @@ typedef struct {
     int width;
     int height;
     unsigned char* pixel;
-
 }Image;
 
 
 unsigned char* generateMosaic(Image image, int tileSize) {
-
+    printf("Hey ausfuehrung");
     int width = image.width;
     int height = image.height;
     int tileWidth = 0;
@@ -68,5 +67,6 @@ unsigned char* generateMosaic(Image image, int tileSize) {
             }
         }
     }
+    printf("Hey ausfuehrung2");
     return pixelatedImage;
 }
