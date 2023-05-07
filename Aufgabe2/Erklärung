@@ -1,7 +1,7 @@
 Aufgabe 1:
 
-a: Die Datei ist 00 00 01 78 in Hex groß, was 276 Bytes entspricht. Die Speicherung ist
-    Little-Endian.
+a: Die Datei ist 00 00 01 78 in Hex groß, was 376 Bytes entspricht. Die Speicherung ist
+    Little-Endian. (LSB steht an erster Stelle im Speicher. Von klein nach groß.)
 
 b:
 Header-Größe:  00-00-00-28

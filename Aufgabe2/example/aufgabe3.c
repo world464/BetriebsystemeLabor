@@ -12,10 +12,10 @@
 #define BMP_HEADER_SIZE 54
 
 int min(int x, int y){
-    if(x > y){
-        return x;
-    } else{
+    if(x > y){//Gibt immer das groessere zurueck
         return y;
+    } else{
+        return x;
     }
 }
 
@@ -80,12 +80,13 @@ int gerneratePicture(char* argv[]) {
 
     // Get the image size, width, height and bit depth
     uint32_t image_size = *(uint32_t*) &bmp_header[2];
-    int32_t width = *(int32_t*) &bmp_header[18];
+    int32_t width = *(int32_t*) &bmp_header[18] ;
     int32_t height = *(int32_t*) &bmp_header[22];
     uint16_t bit_depth = *(uint16_t*) &bmp_header[28];
 
     // Print the image size, width, height and bit depth for debugging purposes
     printf( "width: %i, height: %i, size: %i\n", width, height, image_size);
+    printf( "bitdepth: %i\n", bit_depth);
 
     // Allocate memory for the pixel data
     unsigned char* pixel_data = (unsigned char*) malloc(image_size - BMP_HEADER_SIZE);
@@ -140,16 +141,24 @@ int gerneratePicture(char* argv[]) {
         }
     }*/
 
-    //Reset Picture
-    /*for (int i = 0; i < height; i++) {
+   /* //Reset Picture
+    for (int i = 0; i < height; i++) {
         int offset = i * pixel_bytes_per_row + i * padding_size;
         for (int j = 0, k = offset; j < width; j++, k += bytes_per_pixel) {
             pixel_data[k] = pixel_data[k + 1] = pixel_data[k + 2] = 0xff;
         }
     }*/
 
+    // Change every odd row to black
+    for (int i = 1; i < height; i+=2) {//odd = uneven
+        int offset = i * pixel_bytes_per_row + i * padding_size;
+        for (int j = 0, k = offset; j < width; j++, k += bytes_per_pixel) {
+            pixel_data[k] = pixel_data[k + 1] = pixel_data[k + 2] = 0;
+        }
+    }
 
-    // Print pixel data
+
+   // Print pixel data
     for (int i = 0; i < height; i++) {
         int offset = i * pixel_bytes_per_row + i * padding_size;
         for (int j = 0, k = offset; j < width; j++, k += bytes_per_pixel) {
@@ -162,29 +171,19 @@ int gerneratePicture(char* argv[]) {
         printf("\n");
     }
 
-    /* // Change every odd row to black
-    for (int i = 1; i < height; i+=2) {//odd = uneven
-        int offset = i * pixel_bytes_per_row + i * padding_size;
-        for (int j = 0, k = offset; j < width; j++, k += bytes_per_pixel) {
-            pixel_data[k] = pixel_data[k + 1] = pixel_data[k + 2] = 0;
-        }
-    }*/
-
-    // Reset the file pointer to the start of the pixel data
-    lseek(fd, BMP_HEADER_SIZE, SEEK_SET);
 
     //TODO: picture does not work up to now
     //TODO: Title has to be changed
-    Image kleinesImage;
-    kleinesImage.height = height;
-    kleinesImage.width = width;
-    kleinesImage.pixel = pixel_data;
+
     //unsigned char* newPixels = generateMosaic(kleinesImage, tileSize);
 
-    for(int y = 0; y < height; y += tileSize){
-        for(int x = 0; x < width; x += tileSize) {
-            int tileWidth = min(tileSize, (width - x));
-            int tileHeight = min(tileSize, (height - y));
+   for(int y = 0; y < height; y += tileSize){
+        int offsetHeightY = y * pixel_bytes_per_row + y * padding_size;
+        for(int32_t x = 0; x < width; x += tileSize) {
+            int32_t difWidth = (width - x);
+            int32_t difHeight = (height - y);
+            int32_t tileWidth = min(tileSize, difWidth);
+            int32_t tileHeight = min(tileSize, difHeight);//min war falsch!!!
 
             int sumRed = 0;
             int sumGreen = 0;
@@ -192,10 +191,10 @@ int gerneratePicture(char* argv[]) {
             int count = 0;
 
             //Von einer Kachel wird der Mittelwert berechnet
-            for (int i = 0 + y; i < tileHeight + y; i++) {
-                int offset = i * pixel_bytes_per_row + i * padding_size;
-                for (int j = 0 + x, k = offset; j < tileWidth + x; j++, k += bytes_per_pixel) {
-                    sumRed = pixel_data[k + 2];
+            for (int i = 0; i < tileHeight; i++) {
+                int offsetHeight = (y + i) * pixel_bytes_per_row + (y + i) * padding_size;
+                for (int j = 0, k = offsetHeight + x; j < tileWidth; j++, k += bytes_per_pixel) {
+                    sumRed += pixel_data[k + 2];//Plus vergessen!!!!!!
                     sumGreen += pixel_data[k + 1];
                     sumBlue += pixel_data[k];
                     count++;
@@ -205,11 +204,12 @@ int gerneratePicture(char* argv[]) {
             int avgRed = sumRed / count;
             int avgGreen = sumGreen / count;
             int avgBlue = sumBlue / count;
+            //printf("Red %d, Green %d, Blue %d",avgRed, avgGreen, avgBlue);
 
-            //Eine Kachel mit dem Mittelwert ueberschrieben
-            for (int i2 = 0 + y; i2 < tileHeight + y; i2++) {
-                int offset2 = i2 * pixel_bytes_per_row + i2 * padding_size;
-                for (int j2 = 0 + x, k2 = offset2; j2 < tileWidth + x; j2++, k2 += bytes_per_pixel) {
+           //Eine Kachel mit dem Mittelwert ueberschrieben
+            for (int i = 0; i < tileHeight; i++) {
+                int offsetHeight = (y + i) * pixel_bytes_per_row + (y + i) * padding_size;
+                for (int j = 0, k2 = offsetHeight + x; j < tileWidth; j++, k2 += bytes_per_pixel) {
                     pixel_data[k2 + 2] = avgRed;
                     pixel_data[k2 + 1] = avgGreen;
                     pixel_data[k2] = avgBlue;
@@ -237,7 +237,7 @@ int gerneratePicture(char* argv[]) {
     lseek(fd, BMP_HEADER_SIZE, SEEK_SET);
 
 
-//Hier passiert nichts!!!
+    //Hier passiert nichts!!!
     // Overwrite the pixel data of the opened file
     ssize_t bytes_written = write(fd, pixel_data, image_size - BMP_HEADER_SIZE);
     if (bytes_written != image_size - BMP_HEADER_SIZE) {
