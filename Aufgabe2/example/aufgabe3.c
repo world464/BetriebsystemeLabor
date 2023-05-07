@@ -12,11 +12,10 @@
 #define BMP_HEADER_SIZE 54
 
 int min(int x, int y){
-    if(x > y){//Gibt immer das groessere zurueck
+    if(x > y){
         return y;
-    } else{
-        return x;
     }
+    return x;
 }
 
 int gerneratePicture(char* argv[]) {
@@ -110,6 +109,7 @@ int gerneratePicture(char* argv[]) {
 
     int bytes_per_pixel = bit_depth / 8; // Careful: this only works for bit depths which are a multiples of 8
     int pixel_bytes_per_row = width * bytes_per_pixel;
+    int pixel_bytes_per_tileSize = tileSize * bytes_per_pixel;
 
     // Calculate the amount of necessary bytes for each row so that the next row starts at a 4-byte boundary.
     // This is done by adding 3 to the amount of bytes in a row and then masking the last two bits.
@@ -149,13 +149,13 @@ int gerneratePicture(char* argv[]) {
         }
     }*/
 
-    // Change every odd row to black
+    /*// Change every odd row to black
     for (int i = 1; i < height; i+=2) {//odd = uneven
         int offset = i * pixel_bytes_per_row + i * padding_size;
         for (int j = 0, k = offset; j < width; j++, k += bytes_per_pixel) {
             pixel_data[k] = pixel_data[k + 1] = pixel_data[k + 2] = 0;
         }
-    }
+    }*/
 
 
    // Print pixel data
@@ -171,29 +171,29 @@ int gerneratePicture(char* argv[]) {
         printf("\n");
     }
 
-
-    //TODO: picture does not work up to now
     //TODO: Title has to be changed
 
-    //unsigned char* newPixels = generateMosaic(kleinesImage, tileSize);
+   for(int y = 0; y < height; y += tileSize){//int offsetTileSize = i * pixel_bytes_per_tileSize;
+        for(int x = 0; x < width; x += tileSize) {
 
-   for(int y = 0; y < height; y += tileSize){
-        int offsetHeightY = y * pixel_bytes_per_row + y * padding_size;
-        for(int32_t x = 0; x < width; x += tileSize) {
-            int32_t difWidth = (width - x);
-            int32_t difHeight = (height - y);
-            int32_t tileWidth = min(tileSize, difWidth);
-            int32_t tileHeight = min(tileSize, difHeight);//min war falsch!!!
+            //Bild passt nicht perfekt der Groesse, deshalb berechnen wie viel Platz noch uebrig ist.
+            int tileWidth = min(tileSize , (width - x));
+            int tileHeight = min(tileSize, (height - y));//min war falsch!!!
+
+            int offsetWidth = x * bytes_per_pixel;//Vergessen: die Weite mal die Bytes zu multiplizieren
+            //damit der Speicher richtig addressiert wird!!!!
+
 
             int sumRed = 0;
             int sumGreen = 0;
             int sumBlue = 0;
             int count = 0;
 
-            //Von einer Kachel wird der Mittelwert berechnet
+            int offsetHeight = 0;
+            //Von einer Kachel wird der Mittelwert einer Farbe berechnet
             for (int i = 0; i < tileHeight; i++) {
                 int offsetHeight = (y + i) * pixel_bytes_per_row + (y + i) * padding_size;
-                for (int j = 0, k = offsetHeight + x; j < tileWidth; j++, k += bytes_per_pixel) {
+                for (int j = 0, k = offsetHeight + offsetWidth; j < tileWidth; j++, k += bytes_per_pixel) { //position x = j * k
                     sumRed += pixel_data[k + 2];//Plus vergessen!!!!!!
                     sumGreen += pixel_data[k + 1];
                     sumBlue += pixel_data[k];
@@ -206,10 +206,10 @@ int gerneratePicture(char* argv[]) {
             int avgBlue = sumBlue / count;
             //printf("Red %d, Green %d, Blue %d",avgRed, avgGreen, avgBlue);
 
-           //Eine Kachel mit dem Mittelwert ueberschrieben
+           //Eine Kachel mit dem Mittelwert  ueberschrieben
             for (int i = 0; i < tileHeight; i++) {
                 int offsetHeight = (y + i) * pixel_bytes_per_row + (y + i) * padding_size;
-                for (int j = 0, k2 = offsetHeight + x; j < tileWidth; j++, k2 += bytes_per_pixel) {
+                for (int j = 0, k2 = offsetHeight + offsetWidth; j < tileWidth; j++, k2 += bytes_per_pixel) {
                     pixel_data[k2 + 2] = avgRed;
                     pixel_data[k2 + 1] = avgGreen;
                     pixel_data[k2] = avgBlue;
@@ -237,7 +237,6 @@ int gerneratePicture(char* argv[]) {
     lseek(fd, BMP_HEADER_SIZE, SEEK_SET);
 
 
-    //Hier passiert nichts!!!
     // Overwrite the pixel data of the opened file
     ssize_t bytes_written = write(fd, pixel_data, image_size - BMP_HEADER_SIZE);
     if (bytes_written != image_size - BMP_HEADER_SIZE) {
