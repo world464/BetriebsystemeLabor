@@ -5,8 +5,8 @@
 #include <fcntl.h>
 
 #define BMP_HEADER_SIZE 54
-
-/*int main() {
+/*
+int main() {
 
     // Open the bitmap file
     int fd = open("/home/david/git-workspace/BetriebsystemeLabor/Aufgabe2/example/example.bmp", O_RDWR); //absolut path angeben

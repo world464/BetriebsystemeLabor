@@ -7,7 +7,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <string.h>
 #include "MosaicGenerator.c"
+
+int min(int x, int y){
+    if(x > y){
+        return y;
+    }
+    return x;
+}
 
 #define BMP_HEADER_SIZE 54
 
@@ -16,7 +24,7 @@ int main(int argc,char* argv[]) {
     //Konsole einlesen
    char* fileName[sizeof (argv[1])];
    *fileName = argv[1];
-   int pkachel =  atoi(argv[2]);
+   int tileSize =  atoi(argv[2]);
    char* filePath = realpath(*fileName, NULL);
 
     // Open the bitmap file
@@ -88,12 +96,67 @@ int main(int argc,char* argv[]) {
     // Reset the file pointer to the start of the pixel data
     lseek(fd, BMP_HEADER_SIZE, SEEK_SET);
 
-    Image kleinesImage;
-    kleinesImage.height = height;
-    kleinesImage.width = width;
-    kleinesImage.pixel = pixel_data;
-    unsigned char* newPixels = generateMosaic(kleinesImage, pkachel);
 
+    // Main part MosaicGenerator
+    int bytes_per_pixel = bit_depth / 8;
+    int pixel_bytes_per_row = width * bytes_per_pixel;
+    int total_bytes_per_row = (pixel_bytes_per_row + 3) & ~3;
+    int padding_size = total_bytes_per_row - pixel_bytes_per_row;
+
+    for(int y = 0; y < height; y += tileSize){
+        for(int x = 0; x < width; x += tileSize) {
+
+
+            int tileWidth = min(tileSize , (width - x));
+            int tileHeight = min(tileSize, (height - y));
+
+            int offsetWidth = x * bytes_per_pixel;
+
+
+            int sumRed = 0;
+            int sumGreen = 0;
+            int sumBlue = 0;
+            int count = 0;
+
+            int offsetHeight = 0;
+
+            for (int i = 0; i < tileHeight; i++) {
+                int offsetHeight = (y + i) * pixel_bytes_per_row + (y + i) * padding_size;
+                for (int j = 0, k = offsetHeight + offsetWidth; j < tileWidth; j++, k += bytes_per_pixel) {
+                    sumRed += pixel_data[k + 2];
+                    sumGreen += pixel_data[k + 1];
+                    sumBlue += pixel_data[k];
+                    count++;
+                }
+            }
+
+            int avgRed = sumRed / count;
+            int avgGreen = sumGreen / count;
+            int avgBlue = sumBlue / count;
+
+
+            for (int i = 0; i < tileHeight; i++) {
+                int offsetHeight = (y + i) * pixel_bytes_per_row + (y + i) * padding_size;
+                for (int j = 0, k2 = offsetHeight + offsetWidth; j < tileWidth; j++, k2 += bytes_per_pixel) {
+                    pixel_data[k2 + 2] = avgRed;
+                    pixel_data[k2 + 1] = avgGreen;
+                    pixel_data[k2] = avgBlue;
+                }
+            }
+        }
+    }
+
+    close(fd);
+
+    char newFileName[sizeof(argv[1])+sizeof("_mosaic_")+sizeof(tileSize)+sizeof(".bmp")+1];
+    strncat(newFileName , argv[1], sizeof(argv[1])-1);
+    strcat(newFileName , "_mosaic_");
+    strcat(newFileName , argv[2]);
+    strcat(newFileName , ".bmp");
+
+
+    fd = open(newFileName, O_CREAT | O_RDWR, 0666);
+    write(fd, bmp_header, BMP_HEADER_SIZE);
 
 
     // Overwrite the pixel data of the opened file
@@ -114,4 +177,6 @@ int main(int argc,char* argv[]) {
 
 
 }
+
+
 
