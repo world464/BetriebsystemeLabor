@@ -1,3 +1,4 @@
+Nr.1a)
 Lesen Sie sich die Dokumentation zum System Call pipe() mittels man 2 pipe sowie die
 generelle Dokumentation zu Pipes mittels man 7 pipe durch.
 Was ist das Argument des System Calls?
@@ -16,3 +17,30 @@ zwischen Prozessen realisieren?
     - Man kann zwei Pipes gleichzeitig öffnen von zwei kommunizierenden Prozessen.
     Jeweils ein Schreib und Lesende zuordenen, damit können beide Prozesse sich gegenseitig
     Narichten schicken.
+
+Nr. 2 a)
+Wie wird das Lesen und Schreiben auf eine Named Pipe realisiert?
+    -  Nachdem ein spezielles Fifo File erstellt wurde, kann jeder Prozess es öffnen um es zu lesen oder schreiben
+    wie eine normale Datei.
+    -  Es muss an beiden Enden gleichzeitig geöffnet werden, befor eine I/O Operation geöffnet werden kann.
+    Andernfalls blockiert es und wartet auf den anderen Prozess.
+
+Wie kann eine Named Pipe wieder geschlossen und gelöscht werden?
+ TODO: keine Ahnung
+
+ Nr. 2b)
+Mkfifo Datei erstellen mit einem pathname: mkfifo <name>
+
+                    -m, --mode=MODE
+                          set file permission bits to MODE, not a=rw - umask
+
+                   -Z     set the SELinux security context to default type
+
+                   --context[=CTX]
+                          like -Z, or if CTX is specified then set the SELinux or SMACK security con‐
+                          text to CTX
+
+                   --help display this help and exit
+
+                   --version
+                          output version information and exit
