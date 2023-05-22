@@ -1,13 +1,12 @@
 CC=gcc
 CFLAGS=-Wall
 
-all: main
+all: fifo_send fifo_recv
 
-main: fifo_recv.c
-	$(CC) $(CFLAGS) -o main fifo_recv.c
+fifo_send: fifo_send.c
+	gcc -o main fifo_send.c
 
-clean:
-	rm -f main
+fifo_recv: fifo_recv.c
+	gcc -o main fifo_recv.c
 
-main: fifo_send.c
-	$(CC) $(CFLAGS) -o main fifo_send.c
+

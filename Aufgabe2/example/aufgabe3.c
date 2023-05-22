@@ -17,7 +17,7 @@ int min(int x, int y){
 }
 
 #define BMP_HEADER_SIZE 54
-/*
+
 int main(int argc,char* argv[]) {
 
     //Konsole einlesen
@@ -192,6 +192,6 @@ int main(int argc,char* argv[]) {
 
 
 }
-*/
+
 
 

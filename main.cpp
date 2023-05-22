@@ -5,7 +5,6 @@
 #include "Aufgabe1/fork-example.c"
 #include "Aufgabe1/nChildprocess.c"
 #include "Aufgabe1/forknr2c.c"
-#include "Aufgabe2/example/fileReader.c"
 #include "Aufgabe2/example/aufgabe3.c"
 #include "Aufgabe3/unnamedPipes.c"
 

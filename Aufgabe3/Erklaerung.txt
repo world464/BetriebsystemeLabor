@@ -26,6 +26,7 @@ Wie wird das Lesen und Schreiben auf eine Named Pipe realisiert?
     Andernfalls blockiert es und wartet auf den anderen Prozess.
 
 Wie kann eine Named Pipe wieder geschlossen und gelöscht werden?
+
  TODO: keine Ahnung
 
  Nr. 2b)
