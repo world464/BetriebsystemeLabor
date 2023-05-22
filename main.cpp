@@ -7,14 +7,11 @@
 #include "Aufgabe1/forknr2c.c"
 #include "Aufgabe2/example/fileReader.c"
 #include "Aufgabe2/example/aufgabe3.c"
+#include "Aufgabe3/unnamedPipes.c"
 
-/*int main() {
-    //nChildProcess(3);
-    //simpleFork(0,0);
-
-
-
+int main() {
+    unnamedPipes();
 
    return 0;
 }
-*/
+
