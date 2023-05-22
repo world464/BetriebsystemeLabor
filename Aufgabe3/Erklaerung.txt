@@ -1,0 +1,18 @@
+Lesen Sie sich die Dokumentation zum System Call pipe() mittels man 2 pipe sowie die
+generelle Dokumentation zu Pipes mittels man 7 pipe durch.
+Was ist das Argument des System Calls?
+    - Pipe(2) hier 2, es werden zwei Filedeskriptoren erstellt für das Read End und Write End.
+
+Was ist das Schreib- und was das Leseende der Pipe?
+    - The array pipefd is used to return  two  file  descriptors referring  to the ends of the pipe.
+    - pipefd[0] refers to the read end of the pipe.
+    - pipefd[1] refers to the write end of the pipe.
+
+Kann eine Pipe auch bidirektional verwendet werden?
+    - Nein, eine Pipe ist unidirektional also hat nur eine Richtung in der Nachrichten versendet werden können.
+
+Falls nein, wie kann man eine bidirektionale Kommunikation
+zwischen Prozessen realisieren?
+    - Man kann zwei Pipes gleichzeitig öffnen von zwei kommunizierenden Prozessen.
+    Jeweils ein Schreib und Lesende zuordenen, damit können beide Prozesse sich gegenseitig
+    Narichten schicken.
