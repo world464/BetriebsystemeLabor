@@ -8,7 +8,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
-#include "MosaicGenerator.c"
 
 int min(int x, int y){
     if(x > y){
@@ -18,7 +17,7 @@ int min(int x, int y){
 }
 
 #define BMP_HEADER_SIZE 54
-
+/*
 int main(int argc,char* argv[]) {
 
     //Konsole einlesen
@@ -193,6 +192,6 @@ int main(int argc,char* argv[]) {
 
 
 }
-
+*/
 
 

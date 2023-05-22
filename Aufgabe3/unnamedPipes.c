@@ -7,7 +7,7 @@
 int main() {
     int fd[2], ret = 0;
     char output_buffer[] = "my message";
-    char input_buffer[BUFSIZ];
+    char input_buffer[BUFSIZE];
     pid_t pid;
     // create a oneway communication channel, an unnamed pipe
     pipe(fd);
