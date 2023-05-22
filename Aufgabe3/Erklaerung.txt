@@ -1,3 +1,4 @@
+Nr.1a)
 Lesen Sie sich die Dokumentation zum System Call pipe() mittels man 2 pipe sowie die
 generelle Dokumentation zu Pipes mittels man 7 pipe durch.
 Was ist das Argument des System Calls?
@@ -16,3 +17,12 @@ zwischen Prozessen realisieren?
     - Man kann zwei Pipes gleichzeitig öffnen von zwei kommunizierenden Prozessen.
     Jeweils ein Schreib und Lesende zuordenen, damit können beide Prozesse sich gegenseitig
     Narichten schicken.
+
+Nr. 2 a)
+Wie wird das Lesen und Schreiben auf eine Named Pipe realisiert?
+    -  Nachdem ein spezielles Fifo File erstellt wurde, kann jeder Prozess es öffnen um es zu lesen oder schreiben
+    wie eine normale Datei.
+    -  Es muss an beiden Enden gleichzeitig geöffnet werden, befor eine I/O Operation geöffnet werden kann.
+    Andernfalls blockiert es und wartet auf den anderen Prozess.
+
+Wie kann eine Named Pipe wieder geschlossen und gelöscht werden?
