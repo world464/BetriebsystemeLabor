@@ -27,6 +27,13 @@ int main(int argc,char* argv[]) {
    int tileSize =  atoi(argv[2]);
    char* filePath = realpath(*fileName, NULL);
 
+   if(tileSize <= 0){
+      // printf("Error: Wrong tilesize\n");
+       perror("Error: Wrong tilesize\n");
+       exit(EXIT_FAILURE);
+   }
+
+
     // Open the bitmap file
     int fd = open(filePath,  O_RDWR);
     if (fd < 0) {
@@ -149,7 +156,16 @@ int main(int argc,char* argv[]) {
     close(fd);
 
     char newFileName[sizeof(argv[1])+sizeof("_mosaic_")+sizeof(tileSize)+sizeof(".bmp")+1];
-    strncat(newFileName , argv[1], sizeof(argv[1])-1);
+
+   int i = 0;
+   char firstpartFileName[sizeof(*fileName)];
+
+   while((*fileName)[i] != '.'){
+       firstpartFileName[i] = (*fileName)[i];
+       i++;
+   }
+   firstpartFileName[i] = '\0';
+    strcat(newFileName, firstpartFileName);
     strcat(newFileName , "_mosaic_");
     strcat(newFileName , argv[2]);
     strcat(newFileName , ".bmp");
