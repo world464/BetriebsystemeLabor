@@ -11,7 +11,7 @@
 //./fifo_recv man muss es erst kompelieren!!!
 
 int main(int argc, char* argv[]) {
-    char output[3];
+    char output[4];
 
     int fd = open(argv[1],O_WRONLY);
     if(fd < 0) {
@@ -22,6 +22,7 @@ int main(int argc, char* argv[]) {
         sleep(1);
         sprintf(output, "%d", i);
         write(fd, output, sizeof(output));
+        printf("%s %d\n", "Nachricht versandt: ", i);
     }
 
     return 0;

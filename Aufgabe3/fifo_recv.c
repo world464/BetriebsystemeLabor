@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#define BUFSIZE 1024 * 10
+#define BUFSIZE 1024
 
 
 
@@ -19,8 +19,8 @@ int main(int argc, char* argv[]) {
     char input_buffer[BUFSIZE];
 
     //Prints out data
-    for(int i = 100; i >= 0; i--) {
-        read(fd, input_buffer, sizeof(BUFSIZE));
+    //for(int i = 100; i >= 0; i--) {
+    while(read(fd, input_buffer, sizeof(BUFSIZE)) > 0) {
         printf("%s \n", input_buffer);
     }
     return 0;
