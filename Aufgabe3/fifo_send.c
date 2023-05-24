@@ -13,7 +13,11 @@
 int main(int argc, char* argv[]) {
     char output[3];
 
-    int fd = open("my_pipe",O_WRONLY);
+    int fd = open(argv[1],O_WRONLY);
+    if(fd < 0) {
+        printf("%s /n", "Failed to open file.");
+        exit(EXIT_FAILURE);
+    }
     for(int i = 100; i >= 0; i--){
         sleep(1);
         sprintf(output, "%d", i);
