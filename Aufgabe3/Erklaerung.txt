@@ -62,3 +62,26 @@ Werd 1 Sender gestartet aber 2 Empfänger, teilen sich beide Empfänger die Zahl
 Werden 2 Sender gestartet aber nur 1 Empfänger, werden die Zahlen jedes Senders auf der Konsole
 ausgegeben.
 
+Nr. 3a)
+ System Calls - socket():
+
+
+setsockopt():
+
+
+
+sendto():
+
+
+
+bind():
+
+
+
+recvfrom():
+
+
+
+
+Nr.3 b)
+
