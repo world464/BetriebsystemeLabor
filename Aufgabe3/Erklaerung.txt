@@ -45,3 +45,20 @@ Mkfifo Datei erstellen mit einem pathname: mkfifo <name>
 
                    --version
                           output version information and exit
+
+ Nr. 2c)
+Was passiert mit Nachrichten, die gesendet wurden, bevor ein Empfänger lief?
+
+Der Sender wartet bis der Empfänger die erste Nachricht gelesen hat.
+
+Was passiert, wenn der Sender-Prozess beendet wird, während noch Empfänger-Prozesse laufen?
+-Der Empfänger printet die letzte gesendete Zahl aus, bis 100 Zahlen gesendet wurden.
+
+ Was passiert, wenn Sie mehrere Empfänger oder Sender starten?
+
+Werd 1 Sender gestartet aber 2 Empfänger, teilen sich beide Empfänger die Zahlen gleichmäßig auf.
+(Empfänger 1 printet die ungeraden Zahlen aus, Empfänger 2 die geraden Zahlen)
+
+Werden 2 Sender gestartet aber nur 1 Empfänger, werden die Zahlen jedes Senders auf der Konsole
+ausgegeben.
+
