@@ -1,3 +1,3 @@
-/home/user/CLionProjects/BetriebsystemeLabor/cmake-build-debug/CMakeFiles/BetriebsystemeLabor.dir
-/home/user/CLionProjects/BetriebsystemeLabor/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/user/CLionProjects/BetriebsystemeLabor/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/david/git-workspace/BetriebsystemeLabor/cmake-build-debug/CMakeFiles/BetriebsystemeLabor.dir
+/home/david/git-workspace/BetriebsystemeLabor/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/david/git-workspace/BetriebsystemeLabor/cmake-build-debug/CMakeFiles/rebuild_cache.dir
