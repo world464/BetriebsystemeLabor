@@ -85,3 +85,19 @@ recvfrom():
 
 Nr.3 b)
 
+
+
+
+
+Nr.3 c)
+
+Asynchrone: Sender kann jederzeit Daten schicken und empfänger verarbeitet diese gleichzeitig
+
+Synchrone: Empfänger wartet auf Nachricht vom Empfänger und verarbeitet die Nachricht, solange kann der sender keine neuen Daten schicken
+
+
+Nr.3 d)
+
+In der Internet-Protocol-Version IPv4 ist hierfür der Adressbereich zwischen 224.0.0.0 und 239.255.255.255 reserviert,
+während für Multicast-Adressen in IPv6 der Beginn FF00::/8 vorgesehen ist.
+
