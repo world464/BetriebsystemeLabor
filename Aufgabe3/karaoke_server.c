@@ -1,19 +1,12 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
-#include <time.h>
 #include <stdio.h>
 #include <strings.h>
 #include <unistd.h>
 #include <stdlib.h>
 
 #include "common.h"
-
-
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/stat.h>
 #include <fcntl.h>
-#include <stdlib.h>
 #define BUFSIZE 1024
 #define MAXLINESIZE 1024
 
@@ -28,12 +21,10 @@ void error(int err){
 
 int main(int argc, char *argv[]) {
 
-    //File: /home/user/Documents/BetriebsystemeLabor/Aufgabe3/lyrics-1.txt
-
     //open file
 
     FILE* fp;
-    fp = fopen("/home/user/Documents/BetriebsystemeLabor/Aufgabe3/lyrics-1.txt", "r");
+    fp = fopen(PATH_LYRICS, "r");
     if (fp == NULL) {
         printf("%s /n", "Failed to open file.");
         exit(EXIT_FAILURE);
@@ -58,48 +49,25 @@ int main(int argc, char *argv[]) {
 
 
     printf("Server ready to send messages.\n");
-    //while (variable) {
 
-    ///home/user/Documents/BetriebsystemeLabor/Aufgabe3/lyrics-1.txt
 
-    size_t len = 0;
-    ssize_t read;
     char* line = NULL;
 
 
-    //reads a line
+ char massage[50];
+    while(1){
+        fseek(fp, 0, SEEK_SET);
+        while (fgets(massage, sizeof(massage), fp)) {
+            printf("%s", massage);
+            err = sendto(sock, massage, sizeof(massage), 0, (struct sockaddr *) &addr, sizeof(addr));
+            error(err);
+            sleep(1);
 
-   /* while((read = getline(&line, &len, fp) != -1)){
-        //printf("Retieved line of lenth %zu :\n", read);
-        printf("%s", line);
-
-        char massage[50] = "Hey ich bin Johannes Test";
-        err = sendto(sock, massage, sizeof(massage), 0, (struct sockaddr *) &addr,sizeof(addr));
-        error(err);
-        sleep(1);
-
-    }//lesen wir das gesamte fiel aus
-*/
-    char massage[50];
-    while(fgets(massage, sizeof (massage), fp)){
-        printf("%s", massage);
-        err = sendto(sock, massage, sizeof(massage), 0, (struct sockaddr *) &addr,sizeof(addr));
-        error(err);
-        sleep(1);
-
+        }
     }
-
     fclose(fp);
     if(line){
         free(line);
         exit(EXIT_SUCCESS);
     }
-
-
-
-    // Reset the file pointer to the start of the data
-    //Zero bytes have been read
-    //lseek(fd, 0, SEEK_SET);
-
-    //}*/
 }
