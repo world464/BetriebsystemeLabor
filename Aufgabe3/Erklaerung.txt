@@ -65,6 +65,8 @@ ausgegeben.
 Nr. 3a)
  System Calls - socket():
 
+ Create an Endpoint for communication and returns a file discriptor that refers to that endpoint
+
 
 setsockopt():
 
