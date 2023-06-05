@@ -89,8 +89,9 @@ int bind(int sockfd, const struct sockaddr *addr,
     Bind löst diese Problematik in dem es dem File(sockfd) eine Adresse zuweist. addrlen ist die Länge.
     Wichtig:   It is normally necessary to assign a local address using bind() before a SOCK_STREAM socket may receive connections (see accept(2)).
 
-recvfrom():
-
+ ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,
+                        struct sockaddr *src_addr, socklen_t *addrlen);
+ The  recv(),  recvfrom(),  and recvmsg() calls are used to receive messages from a socket.
 
 
 
