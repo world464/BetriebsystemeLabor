@@ -5,10 +5,11 @@
 #include <strings.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "common.h"
 
-void error(int err){
+void error(unsigned int err){
     if(err == -1){
         perror("Error");
         exit(EXIT_FAILURE);
@@ -20,7 +21,7 @@ int main(int argc, char *argv[])
     int err = 0;
      // set up socket
     int sock = socket(AF_INET, SOCK_DGRAM, 0);
-    error(err);
+    error(sock);
     // prepare socket for multicast (reuse port for multiple clients)
     u_int val = 1;
     err = setsockopt(sock, SOL_SOCKET, SO_REUSEPORT, &val, sizeof(val));
@@ -30,7 +31,19 @@ int main(int argc, char *argv[])
     struct sockaddr_in addr;
     bzero((char *)&addr, sizeof(addr));
     addr.sin_family = AF_INET;
+
+    char addrFirstpart[20];
+    strcpy(addrFirstpart, MY_GROUP);
+    strtok(addrFirstpart, ".");
+    int addrs = atoi(addrFirstpart);
+    if(addrs < 224 && addrs > 239){
+        perror("Falscher Adressraum");
+        exit(EXIT_FAILURE);
+    }
+
+
     addr.sin_addr.s_addr = inet_addr(MY_GROUP);
+
     addr.sin_port = htons(MY_PORT);
 
     // send message (current time) every 5 seconds

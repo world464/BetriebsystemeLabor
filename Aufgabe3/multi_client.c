@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <strings.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "common.h"
 
@@ -36,7 +37,18 @@ error(err);
 
 // add socket to multicast group
 struct ip_mreq mreq;
+
+char addrFirstpart[20];
+strcpy(addrFirstpart, MY_GROUP);
+strtok(addrFirstpart, ".");
+int addrs = atoi(addrFirstpart);
+if(addrs < 224 && addrs > 239){
+       perror("Falscher Adressraum");
+       exit(EXIT_FAILURE);
+}
 mreq.imr_multiaddr.s_addr = inet_addr(MY_GROUP);
+
+
 mreq.imr_interface.s_addr = htonl(INADDR_ANY);
 err = setsockopt(sock, IPPROTO_IP, IP_ADD_MEMBERSHIP, &mreq, sizeof(mreq));
 error(err);
