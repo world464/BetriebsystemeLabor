@@ -68,17 +68,25 @@ Nr. 3a)
  Create an Endpoint for communication and returns a file discriptor that refers to that endpoint
 
 
-setsockopt():
-
+int setsockopt(int sockfd, int level, int optname,
+                      const void *optval, socklen_t optlen);
+    Damit kann man Optionen einstellen für ein File mit einer Filedescriptornummer (sockfd).
+    Dabei muss der Name und das Level der Option angegeben werden. Level = SQL_Socket
+    Das Level gibt an auf welcher Schicht diese Option angewant wird. Also Level 3 = TCP
+    Die Argumente optval, optlen kann man die Option einstellen. Das Protokoll nimmt die Parameter von Option
+     und Interpretiert diese.
 
 
 sendto():
 
 
-
-bind():
-
-
+int bind(int sockfd, const struct sockaddr *addr,
+                socklen_t addrlen);
+    “assigning a name to a socket”.
+    Ein Socket wird mit socket() erstellt, danach exestiert es in einem Namensraum(dieser gehört zu einer Adressfamilie),
+    hat aber selbst keine spezifische Adresse.
+    Bind löst diese Problematik in dem es dem File(sockfd) eine Adresse zuweist. addrlen ist die Länge.
+    Wichtig:   It is normally necessary to assign a local address using bind() before a SOCK_STREAM socket may receive connections (see accept(2)).
 
 recvfrom():
 
