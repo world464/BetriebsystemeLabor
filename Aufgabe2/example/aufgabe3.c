@@ -18,6 +18,8 @@ int min(int x, int y){
 
 #define BMP_HEADER_SIZE 54
 
+//Programarguments: /home/user/Documents/BetriebsystemeLabor/Aufgabe2/example/sample.bmp 16
+
 int main(int argc,char* argv[]) {
 
     //Konsole einlesen

@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <stdlib.h>
 
 //gcc fifo_recv.c -o fifo_recv && gcc fifo_send.c -o fifo_send
 //./fifo_recv man muss es erst kompelieren!!!
