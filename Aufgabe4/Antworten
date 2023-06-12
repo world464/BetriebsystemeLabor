@@ -1,0 +1,12 @@
+Aufgabe 1:
+
+a)
+ftruncate wird verwendet um eine Datei (in unserem Fall unser shm) auf eine bestimmte Größe zu kürzen.
+Dieser Aufruf wird vor allem beim Erstellen und Bearbeiten verwendet. Er kann weggelassen werden, wenn
+das Shared Memory Object beliebig groß sein kann oder keine feste Größe gegeben ist.
+
+b)
+
+c)
+
+d)
