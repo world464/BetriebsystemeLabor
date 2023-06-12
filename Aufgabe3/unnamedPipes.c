@@ -6,9 +6,9 @@
 
 #define BUFSIZE 1024
 
-int unnamedPipes() {
+int main(int argc, char* argv[]) {
     int fd[2], ret = 0;
-    char output_buffer[2];
+    char output_buffer[4];
     char input_buffer[BUFSIZE];
     pid_t pid;
     // create a oneway communication channel, an unnamed pipe
