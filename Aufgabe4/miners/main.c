@@ -19,12 +19,15 @@ pthread_mutex_t mine_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t dragon_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t dragon_sleeps_cond = PTHREAD_COND_INITIALIZER;
 
-void* miner(void* arg) {
+void *miner(void *arg) {
     int miner_id = *(int *) arg;
     while (1) {
         pthread_mutex_lock(&mine_mutex);
-        while(dragon_is_awake)
-            pthread_cond_wait(&dragon_sleeps_cond,&dragon_mutex);
+        pthread_mutex_lock(&dragon_mutex);
+        while (dragon_is_awake)
+            pthread_cond_wait(&dragon_sleeps_cond, &dragon_mutex);
+        pthread_mutex_unlock(&dragon_mutex);
+
         if (dragon_is_awake) {
             printf("Miner %d got eaten.\n", miner_id);
             pthread_exit(NULL);
@@ -44,11 +47,11 @@ void* miner(void* arg) {
         pthread_mutex_unlock(&mine_mutex);
 
         //sleep(rand() % MAX_REST);  // Alter Waiting Code
-          sleep(MIN_REST + rand() % MAX_REST); //Neuer Waiting Code
+        sleep(MIN_REST + rand() % MAX_REST); //Neuer Waiting Code
     }
 }
 
-void* dragon(void* arg) {
+void *dragon(void *arg) {
     while (1) {
         sleep(rand() % 20 + 20);  // Sleeping
 
@@ -77,7 +80,7 @@ int main() {
     pthread_create(&dragon_thread, NULL, &dragon, NULL);
 
     for (int i = 0; i < NUM_MINERS; i++) {
-        miner_ids[i] = i+1;
+        miner_ids[i] = i + 1;
         pthread_create(&miners[i], NULL, &miner, &miner_ids[i]);
     }
 
