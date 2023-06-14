@@ -16,7 +16,3 @@ auf einen Speicher zuzugreifen, der uns nicht gehört.
 d)
 Mit flock können wir die Datei blockieren, dass sie nicht von Prozess 2 geöffnet werden kann
 bis Prozess 1 die Datei beschrieben und freigegeben hat.
-
-Aufgabe 2:
-
-a)
