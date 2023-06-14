@@ -5,8 +5,18 @@ ftruncate wird verwendet um eine Datei (in unserem Fall unser shm) auf eine best
 Dieser Aufruf wird vor allem beim Erstellen und Bearbeiten verwendet. Er kann weggelassen werden, wenn
 das Shared Memory Object beliebig groß sein kann oder keine feste Größe gegeben ist.
 
-b)
+b) Die Prozesse sollten sich gegenseitig blockieren, da der Eine immer auf den anderen warten muss. In der
+While Schleife kommt es allerdings wegen dem fehlenden sleep zu keinem Kontextwechsel mehr weshalb
+die Prozesse nacheinander ablaufen.
 
-c)
+c) In proc2.c wird unser Shared-Memory Object nicht erstellt sondern nur darauf zugegriffen.
+Startet man also zuerst Prozess 2 bekommen wir einen Segmentation fault, da wir versuchen
+auf einen Speicher zuzugreifen, der uns nicht gehört.
 
 d)
+Mit flock können wir die Datei blockieren, dass sie nicht von Prozess 2 geöffnet werden kann
+bis Prozess 1 die Datei beschrieben und freigegeben hat.
+
+Aufgabe 2:
+
+a)

@@ -26,9 +26,10 @@ int main() {
         printf("Counter: %d\n", ptr->counter);
         pthread_mutex_unlock(&ptr->mutex);
         sleep(2);
+
     }
 
-    printf("Counter reached 0. Signal other process to continue.\n")
+    printf("Counter reached 0. Signal other process to continue.\n");
     // Signal the first process to continue
     sem_post(sem);
 

@@ -10,6 +10,7 @@
 #define MAX_CARRY 20
 #define MAX_WORK 3
 #define MAX_REST 2
+#define MIN_REST 1
 
 int32_t gems_in_mine = MINE_CAPACITY;
 bool dragon_is_awake = false;
@@ -20,9 +21,10 @@ pthread_cond_t dragon_sleeps_cond = PTHREAD_COND_INITIALIZER;
 
 void* miner(void* arg) {
     int miner_id = *(int *) arg;
-
     while (1) {
         pthread_mutex_lock(&mine_mutex);
+        while(dragon_is_awake)
+            pthread_cond_wait(&dragon_sleeps_cond,&dragon_mutex);
         if (dragon_is_awake) {
             printf("Miner %d got eaten.\n", miner_id);
             pthread_exit(NULL);
@@ -41,7 +43,8 @@ void* miner(void* arg) {
         }
         pthread_mutex_unlock(&mine_mutex);
 
-        sleep(rand() % MAX_REST);  // Resting
+        //sleep(rand() % MAX_REST);  // Alter Waiting Code
+          sleep(MIN_REST + rand() % MAX_REST); //Neuer Waiting Code
     }
 }
 
