@@ -1,0 +1,48 @@
+a) Kodieren Sie HEEEEELLLLOOOOOOO, so wie es im Text oben beschrieben wurde. Kodieren Sie
+dann ADADADADADAD. Was fällt Ihnen auf?
+- 1H5E4L7O
+- 1A1D1A1D1A1D1A1D1A1D1A1D
+Mit der RLE Kodierung werden im Fall nur abwechselnder Zeichen das Wort nicht kompremiert, sondern mal 2 verlängert.
+
+b) Stellen Sie sich vor, Sie müssten Segmentierungsmasken in einem RLE-Format speichern
+und die zu segmentierenden Objekte sind Personen. Wo würden Sie im Bild anfangen (z. B.
+rechts oben) und würden Sie die Pixel in vertikaler oder horizontaler Richtung durchlaufen?
+
+- Vertikaler Richtung weil eine Person in vertikaler Richtung höher als Breiter ist.
+Dadurch kommt es zu mehr hintereinanderfolgenden Einsen und einer größeren Kompremierung.
+
+Wenn Sie nun zusätzlich Masken von Autos kodieren müssten, würden Sie nun ihr Verfahren
+ändern/erweitern? Argumentieren Sie.
+
+- Ja, weil Autos horizontal länger sind als vertikal sind, deshalb horizontal.
+
+a) Gehen Sie davon aus, dass Sie die letzten vier Bits auf 0 setzen und die ersten vier Bits
+unverändert lassen wollen. Wie würden Sie dies mit einer bitweisen Operation tun?
+AND: 
+- Zahl & 0x11110000 oder: Zahl & ~0x1111 - ~ Invertiert die Zahl und für beliebig lange Bit Zahlen funktieriert es.
+
+b) Wenn Sie eine 8-Bit-Zahl haben und möchten die ersten 4 Bits mit den letzten 4 Bits vertauschen
+(z. B. wird aus 01101010 nun 10100110). Wie können Sie dies mit den genannten
+bitweisen Operationen erreichen?
+
+: 
+x = 0110 1010 & 0000 1111 (0000 1010)
+y =  0110 1010 & 1111 0000 (0110 0000)
+x = x << 4 (1010 0000)
+y = y >> 4 (0000 0110)
+Z = x | y (1010 0110)
+
+
+c) Angenommen, Sie haben eine 8-Bit-Zahl 11010100. Sie möchten das 4. und 5. Bit aus dieser
+Zahl extrahieren (von rechts gezählt, beginnend mit 1). Wie können Sie dies mit bitweisen
+Operationen erreichen?
+- (11010100 & 00011000) >> 3
+
+
+d) Nehmen wir eine 8-Bit-Zahl 10011011. Sie möchten nur das 3. Bit (von rechts, beginnend mit
+1) auf 1 setzen. Mit welchen der genannten bitweisen Operationen können Sie dies erreichen
+und wie?
+
+- 10011011 | 00000100
+
+
